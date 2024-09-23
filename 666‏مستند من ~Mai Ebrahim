@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <string.h>
+#include <cs50.h>
+#define MAX_CANDIDATES 100
+#define NAME_LENGTH 50
+// هيكل لتخزين معلومات المرشح
+typedef struct {
+    string name;
+    int votes;
+} Candidate;
+// مصفوفة لتخزين المرشحين
+Candidate candidates[MAX_CANDIDATES];
+int candidate_count = 0;
+// دالة لإضافة مرشح جديد
+void add_candidate(string name) {
+    if (candidate_count < MAX_CANDIDATES) {
+        candidates[candidate_count].name = name;
+        candidates[candidate_count].votes = 0;
+        candidate_count++;
+    } else {
+        printf("عدد المرشحين تجاوز الحد الأقصى\n");
+    }
+}
+
+// دالة لتسجيل التصويت لمرشح
+bool vote(string name) {
+    for (int i = 0; i < candidate_count; i++) {
+        if (strcmp(candidates[i].name, name) == 0) {
+            candidates[i].votes++;
+            return true; // التصويت تم بنجاح
+        }
+    }
+    return false; // المرشح غير موجود
+}
+
+// دالة لطباعة الفائزين
+void print_winner() {
+    int max_votes = 0;
+
+    // إيجاد أعلى عدد من الأصوات
+    for (int i = 0; i < candidate_count; i++) {
+        if (candidates[i].votes > max_votes) {
+            max_votes = candidates[i].votes;
+        }
+    }
+
+    // طباعة أسماء المرشحين الذين حصلوا على أعلى عدد من الأصوات
+    for (int i = 0; i < candidate_count; i++) {
+        if (candidates[i].votes == max_votes) {
+            printf("%s\n", candidates[i].name);
+        }
+    }
+}
+
+int main(int argc, string argv[]) {
+    // التأكد من وجود أسماء مرشحين
+    if (argc < 2) {
+        printf("يرجى إدخال أسماء المرشحين عند بدء البرنامج.\n");
+        return 1;
+    }
+    // إضافة أسماء المرشحين
+    for (int i = 1; i < argc; i++) {
+        add_candidate(argv[i]);
+    }
+    int num_votes = get_int("أدخل عدد الأصوات: ");
+    // إدخال كل صوت
+    for (int i = 0; i < num_votes; i++) {
+        string vote_name = get_string("أدخل اسم المرشح للتصويت له: ");
+        if (!vote(vote_name)) {
+            printf("المرشح غير موجود.\n");
+        }
+    }
+    // طباعة الفائزين
+    print_winner();
+
+    return 0;
+}

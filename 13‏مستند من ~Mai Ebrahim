@@ -1,0 +1,102 @@
+#include <cs50.h>
+#include <ctype.h>
+#include <stdio.h>
+#include <string.h>
+
+int get_char_score(char c)
+{
+    c = toupper(c);
+
+    switch (c)
+    {
+        case 'A':
+            return 1;
+        case 'B':
+            return 3;
+        case 'C':
+            return 3;
+        case 'D':
+            return 2;
+        case 'E':
+            return 1;
+        case 'F':
+            return 4;
+        case 'G':
+            return 2;
+        case 'H':
+            return 4;
+        case 'I':
+            return 1;
+        case 'J':
+            return 8;
+        case 'K':
+            return 5;
+        case 'L':
+            return 1;
+        case 'M':
+            return 3;
+        case 'N':
+            return 1;
+        case 'O':
+            return 1;
+        case 'P':
+            return 3;
+        case 'Q':
+            return 10;
+        case 'R':
+            return 1;
+        case 'S':
+            return 1;
+        case 'T':
+            return 1;
+        case 'U':
+            return 1;
+        case 'V':
+            return 4;
+        case 'W':
+            return 4;
+        case 'X':
+            return 8;
+        case 'Y':
+            return 4;
+        case 'Z':
+            return 10;
+        default:
+            return 0;
+    }
+}
+
+int calculate_string_score(string str)
+{
+    int score = 0;
+    for (int i = 0, n = strlen(str); i < n; i++)
+    {
+        score += get_char_score(str[i]);
+    }
+    return score;
+}
+
+int main(void)
+{
+    string input1 = get_string("Enter the first string: ");
+    string input2 = get_string("Enter the second string: ");
+
+    int score1 = calculate_string_score(input1);
+    int score2 = calculate_string_score(input2);
+
+    printf("Score for Player1: %d\n", score1);
+    printf("Score for Player2: %d\n", score2);
+
+    if (score1 > score2)
+    {
+        printf("Player 1 Wins\n");
+    }
+    else if (score2 > score1)
+    {
+        printf("Player 2 Wins\n");
+    }
+    else
+    {
+        printf("It's a tie!\n");
+    }
+}

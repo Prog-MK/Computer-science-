@@ -1,0 +1,56 @@
+#include <cs50.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+
+// Define the WAV file's header size in bytes
+#define HEADER_SIZE 44
+
+int main(int argc, char *argv[])
+{
+    // Check for correct number of arguments
+    if (argc != 4)
+    {
+        printf("Usage: ./volume input.wav output.wav factor\n");
+        return 1;
+    }
+
+    // Get the factor
+    float factor = atof(argv[3]);
+
+    // Open input file
+    FILE *input = fopen(argv[1], "r");
+    if (input == NULL)
+    {
+        printf("Could not open file %s.\n", argv[1]);
+        return 1;
+    }
+
+    // Open output file
+    FILE *output = fopen(argv[2], "w");
+    if (output == NULL)
+    {
+        fclose(input);
+        printf("Could not create file %s.\n", argv[2]);
+        return 1;
+    }
+
+    // Read the WAV header from the input file and write it to the output file
+    uint8_t header[HEADER_SIZE];
+    fread(header, sizeof(uint8_t), HEADER_SIZE, input);
+    fwrite(header, sizeof(uint8_t), HEADER_SIZE, output);
+
+    // Read the samples from the input file, apply the factor, and write to the output file
+    int16_t buffer;
+    while (fread(&buffer, sizeof(int16_t), 1, input))
+    {
+        buffer = buffer * factor;
+        fwrite(&buffer, sizeof(int16_t), 1, output);
+    }
+
+    // Close files
+    fclose(input);
+    fclose(output);
+
+    return 0;
+}

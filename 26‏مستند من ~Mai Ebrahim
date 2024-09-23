@@ -1,0 +1,33 @@
+// Function to check multiple-choice answers
+function checkAnswer(button, result) {
+    // Disable all buttons after a choice is made
+    let buttons = document.querySelectorAll('.choices button');
+    buttons.forEach(btn => btn.disabled = true);
+
+    // Update the button colors and response based on correct/incorrect answer
+    if (result === 'correct') {
+        button.style.backgroundColor = 'green';
+        document.getElementById('response1').textContent = 'Correct!';
+        document.getElementById('response1').style.color = 'green';
+    } else {
+        button.style.backgroundColor = 'red';
+        document.getElementById('response1').textContent = 'Incorrect!';
+        document.getElementById('response1').style.color = 'red';
+    }
+}
+
+// Function to check the text answer
+function checkTextAnswer() {
+    let answer = document.getElementById('textAnswer').value.toLowerCase();
+    let response = document.getElementById('response2');
+
+    if (answer === 'mount everest' || answer === 'everest') {
+        response.textContent = 'Correct!';
+        response.style.color = 'green';
+        document.getElementById('textAnswer').style.borderColor = 'green';
+    } else {
+        response.textContent = 'Incorrect!';
+        response.style.color = 'red';
+        document.getElementById('textAnswer').style.borderColor = 'red';
+    }
+}

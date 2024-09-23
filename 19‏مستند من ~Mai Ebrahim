@@ -1,0 +1,49 @@
+import csv
+import sys
+
+def match_longest(sequence, subsequence):
+    max_count = 0
+    length = len(subsequence)
+
+    for i in range(len(sequence) - length + 1):
+        count = 0
+        while sequence[i:i + length] == subsequence:
+            count += 1
+            i += length
+
+        max_count = max(max_count, count)
+
+    return max_count
+
+def main():
+    if len(sys.argv) != 3:
+        print("Usage: python dna.py databases/small.csv sequences/1.txt")
+        return
+
+    database = []
+    with open(sys.argv[1], newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            database.append(row)
+
+    with open(sys.argv[2], 'r') as txtfile:
+        dna_sequence = txtfile.read().strip()
+
+    str_sequences = list(database[0].keys())[1:]
+
+    dna_counts = {}
+    for str_seq in str_sequences:
+        dna_counts[str_seq] = match_longest(dna_sequence, str_seq)
+
+    for person in database:
+        match = True
+        for str_seq in str_sequences:
+            if int(person[str_seq]) != dna_counts[str_seq]:
+                match = False
+                break
+        if match:
+            print(person['name'])
+            return
+
+    print("No match")
+main()

@@ -1,0 +1,34 @@
+import re
+
+# دالة لحساب عدد الحروف والكلمات والجمل في النص
+def count_letters_words_sentences(text):
+    letters = sum(1 for char in text if char.isalpha())  # حساب عدد الحروف
+    words = len(text.split())  # حساب عدد الكلمات
+    sentences = len(re.findall(r'[.!?]', text))  # حساب عدد الجمل
+    return letters, words, sentences
+
+# دالة لحساب الفئة العمرية باستخدام صيغة Coleman-Liau
+def calculate_grade(text):
+    letters, words, sentences = count_letters_words_sentences(text)
+
+    # حساب متوسط عدد الحروف والجمل لكل 100 كلمة
+    L = (letters / words) * 100
+    S = (sentences / words) * 100
+
+    # تطبيق معادلة Coleman-Liau
+    grade = 0.0588 * L - 0.296 * S - 15.8
+    return round(grade)
+
+# طلب إدخال النص من المستخدم
+text = input("أدخل النص: ")
+
+# حساب الفئة العمرية المناسبة للنص
+grade = calculate_grade(text)
+
+# تحديد المخرجات بناءً على قيمة الفئة العمرية
+if grade < 1:
+    print("Before Grade 1")
+elif 1 <= grade <= 16:
+    print(f"Grade {grade}")
+else:
+    print("Grade 16+")

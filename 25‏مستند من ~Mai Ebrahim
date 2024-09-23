@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Trivia Quiz</h1>
+    </header>
+
+    <!-- Part 1: Multiple Choice Question -->
+    <section class="quiz-section">
+        <h2>1. Which planet is known as the Red Planet?</h2>
+        <div class="choices">
+            <button onclick="checkAnswer(this, 'incorrect')">Earth</button>
+            <button onclick="checkAnswer(this, 'incorrect')">Venus</button>
+            <button onclick="checkAnswer(this, 'correct')">Mars</button>
+        </div>
+        <p id="response1"></p>
+    </section>
+
+    <!-- Part 2: Text Input Question -->
+    <section class="quiz-section">
+        <h2>2. What is the tallest mountain in the world?</h2>
+        <div class="text-answer">
+            <input type="text" id="textAnswer" placeholder="Type your answer...">
+            <button onclick="checkTextAnswer()">Submit</button>
+        </div>
+        <p id="response2"></p>
+    </section>
+
+    <footer>
+        <p>Good luck with your trivia!</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

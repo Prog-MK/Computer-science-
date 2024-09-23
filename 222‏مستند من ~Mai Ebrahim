@@ -1,0 +1,11 @@
+sort1 uses:bubble
+
+How do you know?: sorted5000.txt
+
+sort2 uses:merge
+
+How do you know?: sorted10000.txt
+
+sort3 uses: selection
+
+How do you know?: sorted50000.txt
